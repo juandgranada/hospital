@@ -10,9 +10,10 @@ echo "
     <div class='collapse navbar-collapse' id='navbarNavAltMarkup'>
         <div class='navbar-nav'>
             <a class='nav-item nav-link active' href='#'>Inicio</a>
-            <a class='nav-item nav-link active' href='#'>Medicos Titulares e Internos</a>
-            <a class='nav-item nav-link active' href='#'>Medicos Sustitutos</a>
-            <a class='nav-item nav-link active' href='index.php'>Empleados</a>
+            <a class='nav-item nav-link active' href='../medicos/index.php'>Medicos</a>
+            <a class='nav-item nav-link active' href='../sustitutos/index.php'>Sustitutos</a>
+            <a class='nav-item nav-link active' href='#'>Horarios</a>
+            <a class='nav-item nav-link active' href='../empleados/index.php'>Empleados</a>
             <a class='nav-item nav-link active' href='#'>Pacientes</a>
         </div>
     </div>

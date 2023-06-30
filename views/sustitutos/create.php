@@ -1,6 +1,6 @@
 <?php
 include '../header.php';
-include_once '../../controllers/empleadosController.php';
+include_once '../../controllers/sustitutosController.php';
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +9,7 @@ include_once '../../controllers/empleadosController.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Empleado</title>
+    <title>Crear Medicos Sustitutos</title>
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/main.css">
 </head>
@@ -17,10 +17,10 @@ include_once '../../controllers/empleadosController.php';
 <body>
     <?php
     // Se crea una instancia de la clase EmpleadoController
-    $empleado_obj = new EmpleadoController();
+    $sustituto_obj = new SustitutoController();
     ?>
     <div class="container">
-        <h2>Crear Empleado</h2>
+        <h2>Crear Medico Sustituto</h2>
     </div>
     <div class="container ml-5">
         <a class='btn btn-danger m-3' href='index.php' role='button'>Cancelar</a>
@@ -44,15 +44,13 @@ include_once '../../controllers/empleadosController.php';
                         <input type="text" class="form-control" name="codigoPostal" placeholder="Ingrese el codigo postal" required>
                     </div>
                     <div class="form-group">
-                        <label for="tipo">Tipo de empleado</label>
-                        <select name="tipo" class="form-control">
-                            <option selected>Seleccione una opcion</option>
-                            <option value="ATS">ATS</option>
-                            <option value="ATS de zona">ATS de zona</option>
-                            <option value="Auxiliar de enfermeria">Auxiliar de enfermeria</option>
-                            <option value="Celador">Celador</option>
-                            <option value="Aministrativo">Aministrativo</option>
-                        </select>
+                        <label for="matriculaProfesional">Matricula Profesional</label>
+                        <input type="text" class="form-control" name="matriculaProfesional" placeholder="Ingrese el numero de la matricula profesional" required>
+                    
+                    </div>
+                    <div class="form-group">
+                        <label for="fechaAlta">Fecha de Baja</label>
+                        <input type="date" class="form-control" name="fechaBaja" placeholder="">
                     </div>
                 </div>
 
@@ -74,7 +72,11 @@ include_once '../../controllers/empleadosController.php';
                         <input type="number" class="form-control" name="seguridadSocial" placeholder="Ingrese el numero de la seguridad social" required>
                     </div>
                     <div class="form-group">
-                        <label for="estadoVacaciones">Seleccione el estado de vacaciones del empleado</label>
+                        <label for="fechaAlta">Fecha de Alta</label>
+                        <input type="date" class="form-control" name="fechaAlta" placeholder="">
+                    </div>
+                    <div class="form-group">
+                        <label for="estadoVacaciones">Seleccione el estado de vacaciones</label>
                         <select name="estadoVacaciones" class="form-control">
                             <option selected>Seleccione una opcion</option>
                             <option value="No disponbles">No disponibles</option>
@@ -101,11 +103,13 @@ include_once '../../controllers/empleadosController.php';
         $dep = $_POST["departamento"];
         $cod = $_POST["codigoPostal"];
         $seg = $_POST["seguridadSocial"];
-        $tip = $_POST["tipo"];
+        $mat = $_POST["matriculaProfesional"];
+        $fea = $_POST["fechaAlta"];
+        $feb = $_POST["fechaBaja"];
         $est = $_POST["estadoVacaciones"];
 
-        $empleado_obj->create($doc, $nom, $dir, $tel, $ciu, $dep, $cod, $seg, $tip, $est);
-        $alertMessage = 'Empleado creado exitosamente';
+        $sustituto_obj->create($doc, $nom, $dir, $tel, $ciu, $dep, $cod, $seg, $mat, $fea, $feb, $est);
+        $alertMessage = 'Medico sustituto creado exitosamente';
 
         // Verificar si se debe redirigir al index
         if (!empty($alertMessage)) {

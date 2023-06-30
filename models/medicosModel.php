@@ -4,7 +4,7 @@ $rutaProyecto = explode("/", $rutaCarpeta);
 
 require_once $_SERVER['DOCUMENT_ROOT']. "/" . $rutaProyecto[1] .'/core/Connection.php';
 
-class Empleado extends Connection
+class Medico extends Connection
 {
     private $documento;
     private $nombre;
@@ -14,10 +14,11 @@ class Empleado extends Connection
     private $departamento;
     private $codigoPostal;
     private $seguridadSocial;
+    private $matriculaProfesional;
     private $tipo;
     private $estadoVacaciones;
 
-    public function __construct($doc=null,$nom=null,$dir=null,$tel=null,$ciu=null,$dep=null,$cod=null,$seg=null,$tip=null,$est=null)
+    public function __construct($doc=null,$nom=null,$dir=null,$tel=null,$ciu=null,$dep=null,$cod=null,$seg=null,$mat=null,$tip=null,$est=null)
     {
         $this->documento=$doc;
         $this->nombre=$nom;
@@ -27,6 +28,7 @@ class Empleado extends Connection
         $this->departamento=$dep;
         $this->codigoPostal=$cod;
         $this->seguridadSocial=$seg;
+        $this->matriculaProfesional=$mat;
         $this->tipo=$tip;
         $this->estadoVacaciones=$est;
         parent::__construct();
@@ -105,6 +107,15 @@ class Empleado extends Connection
         $this->seguridadSocial=$seg;
         return $this;
     }
+    public function getMatriculaProfesional()
+    {
+        return $this->matriculaProfesional;
+    }
+    public function setMatriculaProfesional($mat)
+    {
+        $this->matriculaProfesional=$mat;
+        return $this;
+    }
     public function getTipo()
     {
         return $this->tipo;
@@ -124,13 +135,13 @@ class Empleado extends Connection
         return $this;
     }
 
-    //metodo para mostrar todos los empleados en una lista en el index
+    //metodo para mostrar todos los medicos titulares e internos en una lista en el index
     public function list()
     {
         try
         {
             // FETCH_OBJ
-            $sql=$this->dbConnection->prepare("SELECT * FROM empleados ORDER BY nombre_emp");
+            $sql=$this->dbConnection->prepare("SELECT * FROM medicos ORDER BY tipo_med,nombre_med");
 
             //ejecutamos
             $sql->execute();
@@ -149,14 +160,14 @@ class Empleado extends Connection
         }
     }
 
-    //metodo para insertar empleados
+    //metodo para insertar medicos
     public function create()
     {
         try
         {
-            $sql = $this->dbConnection->prepare("INSERT INTO empleados (documento_emp,nombre_emp,direccion_emp,
-            telefono_emp,ciudad_emp,departamento_emp,codigoPostal_emp,seguridadSocial_emp,tipo_emp,
-            estadoVacaciones_emp)values(?,?,?,?,?,?,?,?,?,?)");
+            $sql = $this->dbConnection->prepare("INSERT INTO medicos(documento_med,nombre_med,direccion_med,
+            telefono_med,ciudad_med,departamento_med,codigoPostal_med,seguridadSocial_med,matriculaProfesional_med,
+            tipo_med,estadoVacaciones_med)values(?,?,?,?,?,?,?,?,?,?,?)");
             $sql->bindParam(1, $this->documento);
             $sql->bindParam(2, $this->nombre);
             $sql->bindParam(3, $this->direccion);
@@ -165,9 +176,10 @@ class Empleado extends Connection
             $sql->bindParam(6, $this->departamento);
             $sql->bindParam(7, $this->codigoPostal);
             $sql->bindParam(8, $this->seguridadSocial);
-            $sql->bindParam(9, $this->tipo);
-            $sql->bindParam(10, $this->estadoVacaciones);
-            //ejetecutamos
+            $sql->bindParam(9, $this->matriculaProfesional);
+            $sql->bindParam(10, $this->tipo);
+            $sql->bindParam(11, $this->estadoVacaciones);
+            //ejecutamos
             $sql->execute();
             return $sql;
         }catch(PDOException $ex){
@@ -176,7 +188,7 @@ class Empleado extends Connection
         }
     }
 
-    //metodo para actualizar empleado
+    //metodo para actualizar medico
     public function update($doc_nuevo)
     {
         try
@@ -189,13 +201,14 @@ class Empleado extends Connection
             $departamento = $this->departamento;
             $codigoPostal = $this->codigoPostal;
             $seguridadSocial = $this->seguridadSocial;
+            $matriculaProfesional = $this->matriculaProfesional;
             $tipo = $this->tipo;
             $estadoVacaciones = $this->estadoVacaciones;
-            $sql = $this->dbConnection->prepare("UPDATE empleados SET documento_emp=:doc_nuevo,
-            nombre_emp=:nombre,direccion_emp=:direccion,telefono_emp=:telefono,ciudad_emp=:ciudad,
-            departamento_emp=:departamento,codigoPostal_emp=:codigoPostal,seguridadSocial_emp=:seguridadSocial,
-            tipo_emp=:tipo,estadoVacaciones_emp=:estadoVacaciones
-            WHERE documento_emp=:documento");
+            $sql = $this->dbConnection->prepare("UPDATE medicos SET documento_med=:doc_nuevo,
+            nombre_med=:nombre,direccion_med=:direccion,telefono_med=:telefono,ciudad_med=:ciudad,
+            departamento_med=:departamento,codigoPostal_med=:codigoPostal,seguridadSocial_med=:seguridadSocial,
+            matriculaProfesional_med=:matriculaProfesional,tipo_med=:tipo,estadoVacaciones_med=:estadoVacaciones
+            WHERE documento_med=:documento");
             $sql->bindParam(":doc_nuevo", $doc_nuevo);
             $sql->bindParam(":documento", $documento);
             $sql->bindParam(":nombre", $nombre);
@@ -205,6 +218,7 @@ class Empleado extends Connection
             $sql->bindParam(":departamento", $departamento);
             $sql->bindParam(":codigoPostal", $codigoPostal);
             $sql->bindParam(":seguridadSocial", $seguridadSocial);
+            $sql->bindParam(":matriculaProfesional", $matriculaProfesional);
             $sql->bindParam(":tipo", $tipo);
             $sql->bindParam(":estadoVacaciones", $estadoVacaciones);
 
@@ -218,27 +232,29 @@ class Empleado extends Connection
 
     }
 
-    //metodo para eliminar empleados
+    //metodo para eliminar medico
     public function delete()
     {
         try
         {
-            $sql = $this->dbConnection->prepare("DELETE FROM empleados where documento_emp=?");
+            $sql = $this->dbConnection->prepare("DELETE FROM medicos where documento_med=?");
             $sql->bindParam(1, $this->documento);
             $sql->execute();
             return $sql;
         } catch (PDOException $ex) {
-            echo $ex->getMessage();
+            echo '<div class="alert alert-danger container text-center" role="alert">
+            <strong>El medico tiene pacientes a su cargo, por lo tanto no se puede eliminar </strong>
+        </div>';
             die();
         }
 
     }
 
-    //metodo para ver todos los atributos del empleado
+    //metodo para ver todos los atributos del medico
     public function view()
     {
         try {
-            $sql = $this->dbConnection->prepare("SELECT * FROM empleados WHERE documento_emp =?");
+            $sql = $this->dbConnection->prepare("SELECT * FROM medicos WHERE documento_med =?");
             $sql->bindParam(1, $this->documento);
             $sql->execute();
             $resultSet = null;
@@ -251,4 +267,5 @@ class Empleado extends Connection
             die();
         }
     }
+
 }

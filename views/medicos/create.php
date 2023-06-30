@@ -1,6 +1,6 @@
 <?php
 include '../header.php';
-include_once '../../controllers/empleadosController.php';
+include_once '../../controllers/medicosController.php';
 ?>
 
 <!DOCTYPE html>
@@ -9,7 +9,7 @@ include_once '../../controllers/empleadosController.php';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Empleado</title>
+    <title>Crear Medicos</title>
     <link rel="stylesheet" href="../../css/bootstrap.min.css">
     <link rel="stylesheet" href="../../css/main.css">
 </head>
@@ -17,10 +17,10 @@ include_once '../../controllers/empleadosController.php';
 <body>
     <?php
     // Se crea una instancia de la clase EmpleadoController
-    $empleado_obj = new EmpleadoController();
+    $medico_obj = new MedicoController();
     ?>
     <div class="container">
-        <h2>Crear Empleado</h2>
+        <h2>Crear Medico</h2>
     </div>
     <div class="container ml-5">
         <a class='btn btn-danger m-3' href='index.php' role='button'>Cancelar</a>
@@ -44,14 +44,17 @@ include_once '../../controllers/empleadosController.php';
                         <input type="text" class="form-control" name="codigoPostal" placeholder="Ingrese el codigo postal" required>
                     </div>
                     <div class="form-group">
-                        <label for="tipo">Tipo de empleado</label>
-                        <select name="tipo" class="form-control">
+                        <label for="matriculaProfesional">Matricula Profesional</label>
+                        <input type="text" class="form-control" name="matriculaProfesional" placeholder="Ingrese el numero de la matricula profesional" required>
+                    
+                    </div>
+                    <div class="form-group">
+                        <label for="estadoVacaciones">Seleccione el estado de vacaciones</label>
+                        <select name="estadoVacaciones" class="form-control">
                             <option selected>Seleccione una opcion</option>
-                            <option value="ATS">ATS</option>
-                            <option value="ATS de zona">ATS de zona</option>
-                            <option value="Auxiliar de enfermeria">Auxiliar de enfermeria</option>
-                            <option value="Celador">Celador</option>
-                            <option value="Aministrativo">Aministrativo</option>
+                            <option value="No disponbles">No disponibles</option>
+                            <option value="Programadas">Programadas</option>
+                            <option value="Ya disfrutadas">Ya disfrutadas</option>
                         </select>
                     </div>
                 </div>
@@ -74,12 +77,11 @@ include_once '../../controllers/empleadosController.php';
                         <input type="number" class="form-control" name="seguridadSocial" placeholder="Ingrese el numero de la seguridad social" required>
                     </div>
                     <div class="form-group">
-                        <label for="estadoVacaciones">Seleccione el estado de vacaciones del empleado</label>
-                        <select name="estadoVacaciones" class="form-control">
+                        <label for="tipo">Tipo de medico</label>
+                        <select name="tipo" class="form-control">
                             <option selected>Seleccione una opcion</option>
-                            <option value="No disponbles">No disponibles</option>
-                            <option value="Programadas">Programadas</option>
-                            <option value="Ya disfrutadas">Ya disfrutadas</option>
+                            <option value="Titular">Titular</option>
+                            <option value="Interino">Interino</option>
                         </select>
                     </div>
                 </div>
@@ -101,11 +103,12 @@ include_once '../../controllers/empleadosController.php';
         $dep = $_POST["departamento"];
         $cod = $_POST["codigoPostal"];
         $seg = $_POST["seguridadSocial"];
+        $mat = $_POST["matriculaProfesional"];
         $tip = $_POST["tipo"];
         $est = $_POST["estadoVacaciones"];
 
-        $empleado_obj->create($doc, $nom, $dir, $tel, $ciu, $dep, $cod, $seg, $tip, $est);
-        $alertMessage = 'Empleado creado exitosamente';
+        $medico_obj->create($doc, $nom, $dir, $tel, $ciu, $dep, $cod, $seg, $mat, $tip, $est);
+        $alertMessage = 'Medico creado exitosamente';
 
         // Verificar si se debe redirigir al index
         if (!empty($alertMessage)) {
