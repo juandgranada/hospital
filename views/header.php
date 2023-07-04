@@ -12,9 +12,9 @@ echo "
             <a class='nav-item nav-link active' href='#'>Inicio</a>
             <a class='nav-item nav-link active' href='../medicos/index.php'>Medicos</a>
             <a class='nav-item nav-link active' href='../sustitutos/index.php'>Sustitutos</a>
-            <a class='nav-item nav-link active' href='#'>Horarios</a>
+            <a class='nav-item nav-link active' href='../horarios/index.php'>Horarios</a>
             <a class='nav-item nav-link active' href='../empleados/index.php'>Empleados</a>
-            <a class='nav-item nav-link active' href='#'>Pacientes</a>
+            <a class='nav-item nav-link active' href='../pacientes/index.php'>Pacientes</a>
         </div>
     </div>
     <span class='navbar-text'>

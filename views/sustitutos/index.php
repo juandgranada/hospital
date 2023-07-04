@@ -60,19 +60,19 @@ $sustitutos = $sustituto_obj->list();
                         echo "<td>".$item->documento_sus."</td>";
                         echo "<td>".$item->nombre_sus."</td>";
                         echo "<td>".$item->telefono_sus."</td>";
-                        echo "<td>
+                        echo "<td style='text-align:right;'>
                                 <a class='btn btn-warning mr-0' href='view.php?documento=".$item->documento_sus."' role='button'>
                                 Ver
                                 <img src='../../images/ver.png' width='18'>
                                 </a>
                             </td>";
-                        echo"<td>
+                        echo"<td style='text-align:right;'>
                                 <a class='btn btn-info' href='update.php?documento=".$item->documento_sus."' role='button'>
                                 Editar
                                 <img src='../../images/editar.png' width='18'>  
                                 </a>
                             </td>";
-                        echo"<td>
+                        echo"<td style='text-align:right;'>
                                 <a class='btn btn-danger' href='index.php?delete=" . $item->documento_sus. "' role='button'
                                 onclick='return confirmarEliminacion()'>
                                     Eliminar

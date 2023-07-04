@@ -66,13 +66,13 @@ $empleados = $empleado_obj->list();
                                 <img src='../../images/ver.png' width='18'>
                                 </a>
                             </td>";
-                        echo"<td>
+                        echo"<td style='text-align:right;'>
                                 <a class='btn btn-info' href='update.php?documento=".$item->documento_emp."' role='button'>
                                 Editar
                                 <img src='../../images/editar.png' width='18'>  
                                 </a>
                             </td>";
-                        echo"<td>
+                        echo"<td style='text-align:right;'>
                                 <a class='btn btn-danger' href='index.php?delete=" . $item->documento_emp . "' role='button'
                                 onclick='return confirmarEliminacion()'>
                                     Eliminar
